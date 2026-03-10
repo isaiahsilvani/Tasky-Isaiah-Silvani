@@ -6,7 +6,6 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.ksp)
-    id("kotlin-kapt")
 }
 
 android {
@@ -64,8 +63,8 @@ dependencies {
     implementation(libs.androidx.compose.material3)
 
     // Hilt
+    ksp(libs.hilt.compiler)
     implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -74,8 +73,13 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
-}
 
-kapt {
-    correctErrorTypes = true
+    // for hiltViewModel()
+    implementation(libs.androidx.hilt.navigation.compose)
+
+    // The core library
+    implementation(libs.destinations.core)
+
+    // The annotation processor (this generates the code)
+    ksp(libs.destinations.ksp)
 }
